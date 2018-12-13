@@ -1,0 +1,10 @@
+#!/bin/bash
+sudo yum -y update
+sudo yum -y install python-pip
+sudo pip install boto3
+
+cd /home/ec2-user/
+curl -o metrics.py https://s3.amazonaws.com/chrismarm-cloudwatch-tests/metrics.py
+
+# Cron the call to python script with "crontab -e"
+# */10 * * * * /usr/bin/env python2 /home/ec2-user/metrics.py
