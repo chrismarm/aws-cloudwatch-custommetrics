@@ -1,0 +1,14 @@
+#!/bin/bash
+
+sudo yum -y update
+sudo yum -y install git-all
+sudo yum -y install httpd
+sudo service httpd start
+sudo curl -o /root/go.tar.gz https://storage.googleapis.com/golang/go1.8.1.linux-amd64.tar.gz
+sudo tar -C /usr/local -xzf /root/go.tar.gz
+sudo mkdir -p /opt/go/src/metrics
+cd /opt/go/src/metrics
+sudo curl -o main.go https://s3.amazonaws.com/chrismarm-metrics/main.go
+sudo GOPATH=/opt/go /usr/local/go/bin/go get github.com/aws/aws-sdk-go
+sudo GOPATH=/opt/go /usr/local/go/bin/go get ./...
+sudo GOPATH=/opt/go /usr/local/go/bin/go run main.go
